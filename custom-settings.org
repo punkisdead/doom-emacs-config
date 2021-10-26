@@ -51,7 +51,6 @@ Set the default theme for Doom
 
 #+begin_src emacs-lisp
 (setq doom-theme 'doom-tomorrow-night)
-(setq doom-themes-treemacs-theme "doom-colors")
 #+end_src
 
 Enable bold and italic for comments and keywords
@@ -97,6 +96,12 @@ Configure the language server
   (setq lsp-solargraph-symbols nil)
   (setq lsp-solargraph-folding nil))
 
+#+end_src
+
+* Treemacs
+
+#+begin_src emacs-lisp
+(setq doom-themes-treemacs-theme "doom-colors")
 #+end_src
 
 * Misc config
