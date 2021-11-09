@@ -69,6 +69,14 @@ Show line numbers
 (setq display-line-numbers-type t)
 #+end_src
 
+* Lisp Settings
+
+#+begin_src emacs-lisp
+;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; Replace "sbcl" with the path to your implementation
+;; (setq inferior-lisp-program "sbcl")
+#+end_src
+
 * Org config
 #+begin_src emacs-lisp
 ;; If you use `org' and don't want your org files in the default location below,
@@ -76,7 +84,12 @@ Show line numbers
 (setq org-directory "~/org/")
 #+end_src
 
-* Ruby config
+* Projectile config
+
+#+begin_src emacs-lisp
+(add-hook 'projectile-mode-hook 'projectile-direnv-export-variables)
+#+end_src
+* TODO Ruby config
 
 Setup ruby to indent by 2 spaces
 
@@ -87,7 +100,7 @@ Setup ruby to indent by 2 spaces
             (setq-local ruby-indent-level ruby-indent-to-hook)))
 #+end_src
 
-Configure the language server
+Configure the language server.
 
 #+begin_src emacs-lisp
 (after! lsp-mode
@@ -97,6 +110,44 @@ Configure the language server
   (setq lsp-solargraph-folding nil))
 
 #+end_src
+
+Configure RSpec to run in docker.
+
+#+begin_src emacs-lisp
+(setq rspec-use-docker-when-possible t)
+#+end_src
+
+Set the command to use when running docker.
+
+#+begin_src emacs-lisp
+(setq rspec-docker-command "docker-compose run --rm")
+#+end_src
+
+Specify the docker container name to use when running specs.
+
+*TODO* Should look into how to specify this using Emacs directory locals.
+
+#+begin_src emacs-lisp
+(setq rspec-docker-container "test")
+#+end_src
+
+Don't prefix the spec file with any path for running specs.
+
+#+begin_src emacs-lisp
+(setq rspec-docker-cwd "")
+#+end_src
+
+Some fancy hacking to override the default wrapper fn for formatting the command used to run specs in docker.
+
+#+begin_src emacs-lisp
+(defun rspec--docker--wrapper-fn (rspec-docker-command rspec-docker-container command)
+  "Function for wrapping a command for execution inside a dockerized environment. "
+  (format "%s %s \"%s\"" rspec-docker-command rspec-docker-container command))
+
+(setq rspec-docker-wrapper-fn 'rspec--docker--wrapper-fn)
+#+end_src
+
+
 
 * Treemacs
 
