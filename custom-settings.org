@@ -123,14 +123,6 @@ Set the command to use when running docker.
 (setq rspec-docker-command "docker-compose run --rm")
 #+end_src
 
-Specify the docker container name to use when running specs.
-
-*TODO* Should look into how to specify this using Emacs directory locals.
-
-#+begin_src emacs-lisp
-(setq rspec-docker-container "test")
-#+end_src
-
 Don't prefix the spec file with any path for running specs.
 
 #+begin_src emacs-lisp
