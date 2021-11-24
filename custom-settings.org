@@ -50,7 +50,15 @@ Set the default fonts for Doom
 Set the default theme for Doom
 
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-tomorrow-night)
+(setq doom-theme 'doom-one)
+#+end_src
+
+Better ANSI colors
+
+#+begin_src emacs-lisp
+(custom-set-faces
+  '(ansi-color-blue ((t (:foreground "RoyalBlue1" :weight bold))))
+  '(ansi-color-red ((t (:foreground "firebrick" :weight bold)))))
 #+end_src
 
 Enable bold and italic for comments and keywords
@@ -67,6 +75,13 @@ Show line numbers
 
 #+begin_src emacs-lisp
 (setq display-line-numbers-type t)
+#+end_src
+
+* Company Mode
+
+Enable company mode for everything except...
+#+begin_src emacs-lisp
+(setq company-global-modes '(not inf-ruby-mode))
 #+end_src
 
 * Lisp Settings
@@ -139,7 +154,23 @@ Some fancy hacking to override the default wrapper fn for formatting the command
 (setq rspec-docker-wrapper-fn 'rspec--docker--wrapper-fn)
 #+end_src
 
+Better go to definition
 
+#+begin_src emacs-lisp
+(after! robe
+  (set-lookup-handlers! 'ruby-mode
+    :definition '(projectile-rails-goto-file-at-point robe-jump)
+    :documentation #'robe-doc))
+
+(after! ruby-mode
+  (set-lookup-handlers! 'ruby-mode
+    :definition '(projectile-rails-goto-file-at-point robe-jump)
+    :documentation #'robe-doc))
+
+(after! web-mode
+  (set-lookup-handlers! 'web-mode
+    :definition '(projectile-rails-goto-file-at-point rails-routes-jump)))
+#+end_src
 
 * Treemacs
 
